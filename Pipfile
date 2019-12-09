@@ -13,6 +13,8 @@ plotly = "*"
 pyimgur = "*"
 transitions = "*"
 flake8 = "*"
+pandas = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.6"

@@ -9,10 +9,13 @@ from linebot.models import MessageEvent, TextMessage
 
 import fsm
 import utils
+import handler
 
 load_dotenv()
 
 machine = fsm.InvestMachine("IM")
+hall = handler.HallHandler(machine)
+voladility = handler.VoladilityHandler(machine)
 
 app = Flask(__name__, static_url_path="")
 
@@ -42,22 +45,17 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
-    # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
             continue
 
-        # utils.send_image_url(
-        #     event.reply_token, "https://i.imgur.com/s7jyEPQ.jpg"
-        # )
-
         text = str(event.message.text.lower())
-        if (text == "vol"):
-            machine.vol()
-        if (text == "home"):
-            machine.home()
+        if (machine.state == "hall"):
+            hall.handle(event, text)
+        if (machine.state == "volatility"):
+            voladility.handle(event, text)
 
     return "OK"
 

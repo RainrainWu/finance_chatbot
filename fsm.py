@@ -1,10 +1,9 @@
 from transitions import Machine
 
-import utils
 
 class InvestMachine(object):
 
-    states = ["home", "volatility", "strategy"]
+    states = ["hall", "volatility", "strategy"]
 
     def __init__(self, name):
 
@@ -12,20 +11,20 @@ class InvestMachine(object):
         self.kittens_rescued = 0
         self.machine = Machine(model=self,
                                states=InvestMachine.states,
-                               initial="home")
+                               initial="hall")
 
         self.machine.add_transition(trigger="vol",
-                                    source="home",
+                                    source="hall",
                                     dest="volatility")
 
-        self.machine.add_transition(trigger="home",
+        self.machine.add_transition(trigger="hall",
                                     source="volatility",
-                                    dest="home")
+                                    dest="hall")
 
     def on_enter_volatility(self):
 
         print("\nEnter vol\n")
 
-    def on_enter_home(self):
+    def on_enter_hall(self):
 
-        print("\nEnter home\n")
+        print("\nEnter hall\n")
