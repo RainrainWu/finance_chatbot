@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+python-dotenv = "*"
+line-bot-sdk = "*"
+plotly = "*"
+pyimgur = "*"
+transitions = "*"
+flake8 = "*"
+pandas = "*"
+numpy = "*"
+requests = "*"
+psutil = "*"
+chart-studio = "*"
+pygithub = "*"
+
+[requires]
+python_version = "3.6"
