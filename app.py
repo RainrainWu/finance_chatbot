@@ -1,15 +1,18 @@
 import os
 import sys
 
-from flask import Flask, jsonify, request, abort, send_file
+from flask import Flask, request, abort
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage
 
+import fsm
 import utils
 
 load_dotenv()
+
+machine = fsm.InvestMachine("IM")
 
 app = Flask(__name__, static_url_path="")
 
@@ -46,13 +49,20 @@ def callback():
         if not isinstance(event.message, TextMessage):
             continue
 
-        utils.send_image_url(
-            event.reply_token, "https://i.imgur.com/s7jyEPQ.jpg"
-        )
+        # utils.send_image_url(
+        #     event.reply_token, "https://i.imgur.com/s7jyEPQ.jpg"
+        # )
+
+        text = str(event.message.text.lower())
+        if (text == "vol"):
+            machine.vol()
+        if (text == "home"):
+            machine.home()
 
     return "OK"
 
 
 if __name__ == "__main__":
+
     port = os.environ.get("PORT", 8000)
     app.run(host="0.0.0.0", port=port, debug=True)
