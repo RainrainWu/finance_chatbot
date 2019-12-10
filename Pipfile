@@ -19,6 +19,7 @@ requests = "*"
 psutil = "*"
 chart-studio = "*"
 pygithub = "*"
+lxml = "*"
 
 [requires]
 python_version = "3.6"

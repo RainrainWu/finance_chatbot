@@ -14,6 +14,7 @@ load_dotenv()
 
 machine = fsm.InvestMachine("IM")
 hall = handler.HallHandler(machine)
+news = handler.NewsHandler(machine)
 voladility = handler.VoladilityHandler(machine)
 
 app = Flask(__name__, static_url_path="")
@@ -52,6 +53,9 @@ def callback():
         text = str(event.message.text.lower())
         if (machine.state == "hall"):
             hall.handle(event, text)
+            continue
+        if (machine.state == "news"):
+            news.handle(event, text)
             continue
         if (machine.state == "volatility"):
             voladility.handle(event, text)

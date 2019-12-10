@@ -21,12 +21,12 @@ class IndexDataHolder():
                                                      m=x.split("/")[0],
                                                      d=x.split("/")[1])
                                 for x in raw_date])
-        date_frame = pd.DataFrame(date_series, columns=["Date"])
+        date_frame = pd.DataFrame(date_series, columns=["date"])
         data_frame = pd.concat([date_frame, self.raw_data.iloc[:, 1:]],
                                axis=1)
 
         # sort by date
-        self.sort_frame = data_frame.sort_values(by="Date",
+        self.sort_frame = data_frame.sort_values(by="date",
                                                  ascending=True)
 
     # get whole dataframe
