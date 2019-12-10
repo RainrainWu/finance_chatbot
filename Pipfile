@@ -15,6 +15,10 @@ transitions = "*"
 flake8 = "*"
 pandas = "*"
 numpy = "*"
+requests = "*"
+psutil = "*"
+chart-studio = "*"
+pygithub = "*"
 
 [requires]
 python_version = "3.6"

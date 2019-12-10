@@ -8,7 +8,6 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage
 
 import fsm
-import utils
 import handler
 
 load_dotenv()
@@ -35,7 +34,6 @@ parser = WebhookParser(channel_secret)
 @app.route("/callback", methods=["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
-    # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
@@ -54,8 +52,10 @@ def callback():
         text = str(event.message.text.lower())
         if (machine.state == "hall"):
             hall.handle(event, text)
+            continue
         if (machine.state == "volatility"):
             voladility.handle(event, text)
+            continue
 
     return "OK"
 

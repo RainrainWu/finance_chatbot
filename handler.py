@@ -1,4 +1,11 @@
 import utils
+import plot
+import data
+import visualizer
+
+
+plot = plot.IndexPlot()
+user = visualizer.GithubUser()
 
 
 class MessageHandler():
@@ -26,3 +33,16 @@ class VoladilityHandler(MessageHandler):
             self.machine.hall()
             utils.send_text_message(event.reply_token,
                                     "Enter hall")
+            return
+        else:
+            print("Accident")
+            cmd, param1 = command.split(" ")
+            holder = data.IndexDataHolder(
+                         "../finance_data/indexes_us/{id}.csv"
+                         .format(id=cmd)
+                     )
+            series = holder.extract_column(param1)
+            plot_url = plot.plot_scatter(series)
+            user.update_visualizer(plot_url)
+            utils.send_text_message(event.reply_token,
+                                    visualizer.ENDPOINT)
