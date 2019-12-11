@@ -27,12 +27,12 @@ class IndexPlot():
         # extract data
         if (group == "us_indexes"):
             holder = data.IndexDataHolder(
-                "./finance_data/{group}/{id}.csv"
+                "../finance_data/{group}/{id}.csv"
                 .format(group=group, id=index)
             )
         elif (group == "us_stocks"):
             holder = data.StockDataHolder(
-                "./finance_data/{group}/{id}.csv"
+                "../finance_data/{group}/{id}.csv"
                 .format(group=group, id=index)
             )
         date = holder.extract_column("date")[-period:]
