@@ -5,10 +5,10 @@ import chart_studio.tools as chst_tl
 import chart_studio.plotly as chst_pl
 from dotenv import load_dotenv
 
-import visualizer
+# import visualizer
 import data
 
-user = visualizer.GithubUser()
+# user = visualizer.GithubUser()
 
 load_dotenv()
 chst_tl.set_credentials_file(
@@ -22,13 +22,19 @@ class IndexPlot():
     def __init__(self):
         pass
 
-    def plot_k(self, index, period):
+    def plot_k(self, group, index, period):
 
-        # extracy data
-        holder = data.IndexDataHolder(
-                         "../finance_data/indexes_us/{id}.csv"
-                         .format(id=index)
-                     )
+        # extract data
+        if (group == "us_indexes"):
+            holder = data.IndexDataHolder(
+                "./finance_data/{group}/{id}.csv"
+                .format(group=group, id=index)
+            )
+        elif (group == "us_stocks"):
+            holder = data.StockDataHolder(
+                "./finance_data/{group}/{id}.csv"
+                .format(group=group, id=index)
+            )
         date = holder.extract_column("date")[-period:]
         open = holder.extract_column("open")[-period:]
         high = holder.extract_column("high")[-period:]
@@ -43,6 +49,6 @@ class IndexPlot():
                                              close=close)])
         fig.update_xaxes(showgrid=False, zeroline=False)
         fig.update_yaxes(showgrid=False, zeroline=False,
-                         range=[min(low) - 150, max(high) + 150])
-        url = chst_pl.plot(fig, filename="temp")
+                         range=[min(low) - 10, max(high) + 10])
+        url = chst_pl.plot(fig, filename="temp", auto_open=False)
         return url
